@@ -10,10 +10,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FilmeDTO {
-        private Long id;
-        private String titulo;
-        private int anoLancamento;
-        private DiretorDTO diretor;
-        private List<AtorDTO> atores;
-        private List<GeneroDTO> generos;
+    private Long id;
+    private String titulo;
+    private int anoLancamento;
+    private DiretorDTO diretor;
+    private List<AtorDTO> atores;
+    private List<GeneroDTO> generos;
 }
+

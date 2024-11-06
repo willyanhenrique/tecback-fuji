@@ -1,5 +1,6 @@
 package br.com.fujideia.iesp.tecback.model.dto;
 
+
 import lombok.Data;
 
 @Data

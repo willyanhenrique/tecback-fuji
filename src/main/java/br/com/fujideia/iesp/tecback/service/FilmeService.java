@@ -11,16 +11,13 @@ import br.com.fujideia.iesp.tecback.model.dto.GeneroDTO;
 import br.com.fujideia.iesp.tecback.repository.FilmeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Validated
 public class FilmeService {
 
     private final FilmeRepository filmeRepository;
@@ -37,24 +34,18 @@ public class FilmeService {
                 .map(this::convertToDTO);
     }
 
-    public FilmeDTO criarFilme(@Valid FilmeDTO filmeDTO) {
+    public FilmeDTO criarFilme(FilmeDTO filmeDTO) {
         Filme filme = convertToEntity(filmeDTO);
         return convertToDTO(filmeRepository.save(filme));
     }
 
-    public Optional<FilmeDTO> atualizarFilme(Long id, @Valid FilmeDTO filmeDTO) {
+    public Optional<FilmeDTO> atualizarFilme(Long id, FilmeDTO filmeDTO) {
         return filmeRepository.findById(id).map(filme -> {
             filme.setTitulo(filmeDTO.getTitulo());
             filme.setAnoLancamento(filmeDTO.getAnoLancamento());
             filme.setDiretor(convertToEntity(filmeDTO.getDiretor()));
-            filme.setAtores(filmeDTO.getAtores()
-                    .stream()
-                    .map(this::convertToEntity)
-                    .collect(Collectors.toList()));
-            filme.setGeneros(filmeDTO.getGeneros()
-                    .stream()
-                    .map(this::convertToEntity)
-                    .collect(Collectors.toList()));
+            filme.setAtores(filmeDTO.getAtores().stream().map(this::convertToEntity).collect(Collectors.toList()));
+            filme.setGeneros(filmeDTO.getGeneros().stream().map(this::convertToEntity).collect(Collectors.toList()));
             return convertToDTO(filmeRepository.save(filme));
         });
     }
@@ -83,6 +74,7 @@ public class FilmeService {
                         .collect(Collectors.toList())
         );
     }
+
 
     private Filme convertToEntity(FilmeDTO filmeDTO) {
         Filme filme = new Filme();
